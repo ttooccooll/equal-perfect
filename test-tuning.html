@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuning System Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+        h1 { color: #0ff; }
+        .test { margin: 10px 0; padding: 10px; background: #2a2a2a; }
+        .pass { border-left: 4px solid #0f0; }
+        .fail { border-left: 4px solid #f00; }
+        .info { color: #ff0; }
+    </style>
+</head>
+<body>
+    <h1>Equal Perfect Synthesizer - Tuning System Tests</h1>
+    <div id="results"></div>
+
+    <script type="module">
+        import { TuningSystem } from './tuning.js';
+
+        const results = document.getElementById('results');
+        const tuning = new TuningSystem();
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test ${type}`;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+
+        // Test 1: 12TET frequency calculation
+        log('<strong>Test 1: 12TET Frequency Calculation</strong>');
+        const a440 = tuning.get12TETFrequency(69); // A4
+        const c261 = tuning.get12TETFrequency(60); // C4
+        log(`A4 (MIDI 69): ${a440.toFixed(2)} Hz (expected: 440.00 Hz)`, 
+            Math.abs(a440 - 440) < 0.01 ? 'pass' : 'fail');
+        log(`C4 (MIDI 60): ${c261.toFixed(2)} Hz (expected: ~261.63 Hz)`, 
+            Math.abs(c261 - 261.63) < 0.1 ? 'pass' : 'fail');
+
+        // Test 2: Harmonic ratios
+        log('<br><strong>Test 2: Harmonic Ratio Calculations</strong>');
+        const ratioFifth = tuning.getHarmonicRatio(60, 67); // C to G (perfect fifth)
+        const ratioMajorThird = tuning.getHarmonicRatio(60, 64); // C to E (major third)
+        const ratioOctave = tuning.getHarmonicRatio(60, 72); // C to C (octave)
+        
+        log(`Perfect Fifth (C to G): ${ratioFifth.toFixed(4)} (expected: 1.5000 = 3/2)`, 
+            Math.abs(ratioFifth - 1.5) < 0.0001 ? 'pass' : 'fail');
+        log(`Major Third (C to E): ${ratioMajorThird.toFixed(4)} (expected: 1.2500 = 5/4)`, 
+            Math.abs(ratioMajorThird - 1.25) < 0.0001 ? 'pass' : 'fail');
+        log(`Octave (C to C): ${ratioOctave.toFixed(4)} (expected: 2.0000)`, 
+            Math.abs(ratioOctave - 2.0) < 0.0001 ? 'pass' : 'fail');
+
+        // Test 3: Adding notes and tuning system
+        log('<br><strong>Test 3: Active Note Management</strong>');
+        const freq1 = tuning.addNote(60); // C4
+        log(`Added C4 as fundamental: ${freq1.toFixed(2)} Hz`, 'pass');
+        
+        const freq2 = tuning.addNote(67); // G4 (perfect fifth above)
+        const expectedG4 = freq1 * 1.5;
+        log(`Added G4: ${freq2.toFixed(2)} Hz (expected: ${expectedG4.toFixed(2)} Hz)`, 
+            Math.abs(freq2 - expectedG4) < 0.1 ? 'pass' : 'fail');
+
+        const info1 = tuning.getTuningInfo();
+        log(`Fundamental: ${info1.fundamental}, Active notes: ${info1.activeCount}`, 
+            info1.fundamental === 'C4' && info1.activeCount === 2 ? 'pass' : 'fail');
+
+        // Test 4: Changing fundamental
+        log('<br><strong>Test 4: Fundamental Change and Retuning</strong>');
+        const freq3 = tuning.addNote(55); // G3 (new lowest note)
+        log(`Added G3 as new fundamental: ${freq3.toFixed(2)} Hz`, 'pass');
+        
+        const info2 = tuning.getTuningInfo();
+        log(`New fundamental: ${info2.fundamental}, Active notes: ${info2.activeCount}`, 
+            info2.fundamental === 'G3' && info2.activeCount === 3 ? 'pass' : 'fail');
+        
+        // Check that C4 and G4 are now tuned relative to G3
+        const c4Info = info2.notes.find(n => n.midiNote === 60);
+        log(`C4 is now interval ${c4Info.interval} semitones above G3 (ratio: ${c4Info.ratio.toFixed(4)})`, 'info');
+
+        // Test 5: Removing notes
+        log('<br><strong>Test 5: Note Removal</strong>');
+        tuning.removeNote(55); // Remove G3
+        const info3 = tuning.getTuningInfo();
+        log(`Removed G3, new fundamental: ${info3.fundamental}, Active: ${info3.activeCount}`, 
+            info3.fundamental === 'C4' && info3.activeCount === 2 ? 'pass' : 'fail');
+
+        tuning.removeNote(60); // Remove C4
+        const info4 = tuning.getTuningInfo();
+        log(`Removed C4, new fundamental: ${info4.fundamental}, Active: ${info4.activeCount}`, 
+            info4.fundamental === 'G4' && info4.activeCount === 1 ? 'pass' : 'fail');
+
+        tuning.removeNote(67); // Remove last note
+        const info5 = tuning.getTuningInfo();
+        log(`Removed all notes, Active: ${info5.activeCount}`, 
+            info5.activeCount === 0 && info5.fundamental === null ? 'pass' : 'fail');
+
+        // Test 6: Major triad (perfect ratios)
+        log('<br><strong>Test 6: Major Triad Tuning (C-E-G)</strong>');
+        tuning.addNote(48); // C3
+        tuning.addNote(52); // E3
+        tuning.addNote(55); // G3
+        
+        const triadInfo = tuning.getTuningInfo();
+        log(`Major triad fundamental: ${triadInfo.fundamental}`, 'info');
+        
+        for (const note of triadInfo.notes) {
+            const cents = 1200 * Math.log2(note.ratio);
+            log(`  ${note.noteName}: ${note.frequency.toFixed(2)} Hz, ratio: ${note.ratio.toFixed(4)}, interval: ${cents.toFixed(1)} cents`, 'info');
+        }
+
+        // Calculate and verify the ratios form a 4:5:6 major triad
+        const baseFreq = triadInfo.notes[0].frequency;
+        const ratio1 = triadInfo.notes[0].frequency / baseFreq;
+        const ratio2 = triadInfo.notes[1].frequency / baseFreq;
+        const ratio3 = triadInfo.notes[2].frequency / baseFreq;
+        
+        log(`Triad ratios: ${ratio1.toFixed(4)}:${ratio2.toFixed(4)}:${ratio3.toFixed(4)}`, 
+            Math.abs(ratio2 - 1.25) < 0.01 && Math.abs(ratio3 - 1.5) < 0.01 ? 'pass' : 'fail');
+
+        log('<br><strong>All tests complete!</strong>', 'pass');
+    </script>
+</body>
+</html>

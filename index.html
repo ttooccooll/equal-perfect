@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equal Perfect Synthesizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="start-overlay" id="startOverlay">
+        <div class="start-content">
+            <h2>◆ EQUAL PERFECT</h2>
+            <p>[ click anywhere to start ]</p>
+        </div>
+    </div>
+
+    <div class="app">
+        <div class="glow-bg"></div>
+        
+        <header>
+            <div class="logo">
+                <span class="logo-icon">◆</span>
+                <h1>Equal Perfect</h1>
+            </div>
+            <p class="tagline">Hybrid tuning where bass meets harmony in perfect ratio</p>
+        </header>
+
+        <div class="main-panel">
+            <div class="left-column">
+                <div class="controls-panel">
+                    <div class="panel-header">
+                        <span class="panel-icon">⚙</span>
+                        <h2>Parameters</h2>
+                    </div>
+                    
+                    <div class="control-section">
+                        <div class="section-title">Sound</div>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label for="waveform">Waveform</label>
+                                <select id="waveform" class="styled-select">
+                                    <option value="sine">Sine</option>
+                                    <option value="sawtooth" selected>Sawtooth</option>
+                                    <option value="square">Square</option>
+                                    <option value="triangle">Triangle</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="tuningSystem">Tuning</label>
+                                <select id="tuningSystem" class="styled-select">
+                                    <option value="equal-perfect">Equal Perfect</option>
+                                    <option value="just-major">Just Major</option>
+                                    <option value="pythagorean">Pythagorean</option>
+                                    <option value="quarter-comma">1/4 Comma</option>
+                                    <option value="equal-19">19-TET</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="volume">Volume</label>
+                                <div class="slider-group">
+                                    <input type="range" id="volume" min="0" max="100" value="30">
+                                    <span id="volumeValue" class="slider-value">30%</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="glideTime">Glide</label>
+                                <div class="slider-group">
+                                    <input type="range" id="glideTime" min="0" max="1000" value="100" step="10">
+                                    <span id="glideTimeValue" class="slider-value">100ms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-section">
+                        <div class="section-title">Envelope</div>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label for="attack">Attack</label>
+                                <div class="slider-group">
+                                    <input type="range" id="attack" min="0" max="500" value="10" step="5">
+                                    <span id="attackValue" class="slider-value">10ms</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="release">Release</label>
+                                <div class="slider-group">
+                                    <input type="range" id="release" min="0" max="2000" value="200" step="10">
+                                    <span id="releaseValue" class="slider-value">200ms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-section">
+                        <div class="section-title">Filter</div>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label for="filterFreq">Frequency</label>
+                                <div class="slider-group">
+                                    <input type="range" id="filterFreq" min="100" max="10000" value="2000" step="100">
+                                    <span id="filterFreqValue" class="slider-value">2kHz</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="filterQ">Resonance</label>
+                                <div class="slider-group">
+                                    <input type="range" id="filterQ" min="0.1" max="20" value="1" step="0.1">
+                                    <span id="filterQValue" class="slider-value">1.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-section">
+                        <div class="section-title">Effects</div>
+                        <div class="control-grid">
+                            <div class="control-group">
+                                <label for="delayMix">Delay</label>
+                                <div class="slider-group">
+                                    <input type="range" id="delayMix" min="0" max="100" value="0">
+                                    <span id="delayMixValue" class="slider-value">0%</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="reverbMix">Reverb</label>
+                                <div class="slider-group">
+                                    <input type="range" id="reverbMix" min="0" max="100" value="0">
+                                    <span id="reverbMixValue" class="slider-value">0%</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="lfoRate">LFO Rate</label>
+                                <div class="slider-group">
+                                    <input type="range" id="lfoRate" min="0.1" max="20" value="5" step="0.1">
+                                    <span id="lfoRateValue" class="slider-value">5Hz</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="lfoDepth">LFO Depth</label>
+                                <div class="slider-group">
+                                    <input type="range" id="lfoDepth" min="0" max="100" value="0">
+                                    <span id="lfoDepthValue" class="slider-value">0%</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="lfoTarget">LFO Target</label>
+                                <select id="lfoTarget" class="styled-select">
+                                    <option value="none">None</option>
+                                    <option value="pitch">Pitch</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button id="recordBtn" class="control-btn">● REC</button>
+                        <button id="savePresetBtn" class="control-btn">SAVE</button>
+                        <button id="loadPresetBtn" class="control-btn">LOAD</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-panel">
+                <div class="status-row">
+                    <div class="status-card fundamental">
+                        <span class="status-label">Fundamental</span>
+                        <span id="fundamental" class="status-value">—</span>
+                    </div>
+                    <div class="status-card notes">
+                        <span class="status-label">Active</span>
+                        <span id="activeNotes" class="status-value">0</span>
+                    </div>
+                    <div class="status-card midi">
+                        <span class="status-label">MIDI</span>
+                        <span id="midiStatus" class="status-value">—</span>
+                    </div>
+                </div>
+
+                <div class="notes-panel">
+                    <div class="notes-header">
+                        <span class="panel-icon">♪</span>
+                        <span>Active Notes</span>
+                    </div>
+                    <div id="notesList" class="notes-grid"></div>
+                </div>
+
+                <div class="viz-panel">
+                    <canvas id="vizCanvas" width="400" height="80"></canvas>
+                </div>
+
+                <div class="ratios-panel">
+                    <div class="notes-header">
+                        <span class="panel-icon">⚡</span>
+                        <span>Custom Ratios</span>
+                    </div>
+                    <div class="ratios-grid">
+                        <input type="text" id="ratio1" class="ratio-input" placeholder="1/1" value="1/1">
+                        <input type="text" id="ratio2" class="ratio-input" placeholder="16/15" value="16/15">
+                        <input type="text" id="ratio3" class="ratio-input" placeholder="9/8" value="9/8">
+                        <input type="text" id="ratio4" class="ratio-input" placeholder="6/5" value="6/5">
+                        <input type="text" id="ratio5" class="ratio-input" placeholder="5/4" value="5/4">
+                        <input type="text" id="ratio6" class="ratio-input" placeholder="4/3" value="4/3">
+                        <input type="text" id="ratio7" class="ratio-input" placeholder="3/2" value="3/2">
+                        <input type="text" id="ratio8" class="ratio-input" placeholder="8/5" value="8/5">
+                        <input type="text" id="ratio9" class="ratio-input" placeholder="5/3" value="5/3">
+                        <input type="text" id="ratio10" class="ratio-input" placeholder="15/8" value="15/8">
+                        <input type="text" id="ratio11" class="ratio-input" placeholder="2/1" value="2/1">
+                        <button id="applyRatios" class="control-btn small">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="keyboard-container">
+            <div class="keyboard" id="keyboard"></div>
+        </div>
+
+        <footer>
+            <div class="keyboard-hint">
+                <span class="key-badge">A</span>
+                <span class="key-badge">S</span>
+                <span class="key-badge">D</span>
+                <span class="key-badge">F</span>
+                <span class="key-badge">G</span>
+                <span class="key-badge">H</span>
+                <span class="key-badge">J</span>
+                <span class="key-badge">K</span>
+                <span class="key-badge">L</span>
+                <span class="key-badge">;</span>
+                <span class="key-badge">'</span>
+                <span class="key-badge">]</span>
+                <span class="hint-text">white keys</span>
+                <span class="key-badge black-key">W</span>
+                <span class="key-badge black-key">E</span>
+                <span class="key-badge black-key">T</span>
+                <span class="key-badge black-key">Y</span>
+                <span class="key-badge black-key">U</span>
+                <span class="key-badge black-key">O</span>
+                <span class="hint-text">black keys</span>
+            </div>
+        </footer>
+    </div>
+
+    <div class="tuning-indicator">
+        Tuning: <span class="mode" id="tuningMode">12TET</span>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
