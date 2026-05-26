@@ -1,8 +1,3 @@
-/**
- * Audio Engine for Equal Justice Synthesizer
- * Handles Web Audio API oscillators with smooth gliding between frequencies
- */
-
 export class AudioEngine {
     constructor(tuningSystem) {
         this.tuningSystem = tuningSystem;

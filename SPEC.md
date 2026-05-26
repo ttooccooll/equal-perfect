@@ -1,4 +1,4 @@
-# Equal Perfect Synthesizer - Technical Specification
+# Equal Justice Synthesizer - Technical Specification
 
 ## Project Overview
 
@@ -6,13 +6,13 @@ A web-based polyphonic synthesizer with a unique hybrid tuning system that combi
 
 ## Core Features
 
-### 1. Hybrid Tuning System (Equal Perfect)
+### 1. Hybrid Tuning System (Equal Justice)
 - **Lowest active note**: Uses 12-tone equal temperament (12TET)
 - **All notes above lowest**: Tune to perfect harmonic ratios from the overtone series
 - **Dynamic retuning**: When the fundamental changes, all other notes glide to new frequencies
 
 ### 2. Alternative Tuning Systems
-- **Equal Perfect** (default): 12TET bass + Just intonation above
+- **Equal Justice** (default): 12TET bass + Just intonation above
 - **Just Major**: Pure major scale (9:8, 5:4, 3:2)
 - **Pythagorean**: Pure fifths (3/2 ratio chain)
 - **1/4 Comma Meantone**: Meantone temperament
@@ -119,7 +119,7 @@ Black keys: W E T Y U O
 | Parameter | Range | Default |
 |-----------|-------|---------|
 | Waveform | sine/sawtooth/square/triangle | sawtooth |
-| Tuning | Equal Perfect, Just Major, etc. | Equal Perfect |
+| Tuning | Equal Justice, Just Major, etc. | Equal Justice |
 | Volume | 0-100% | 30% |
 | Glide Time | 0-1000ms | 100ms |
 | Attack | 0-500ms | 10ms |
