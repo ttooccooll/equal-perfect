@@ -1,4 +1,4 @@
-# Equal Perfect Synthesizer
+# Equal Justice Synthesizer
 
 A web-based polyphonic synthesizer with a unique hybrid tuning system that combines 12TET for the bass with just intonation for upper harmonics. Features a bold brutalist dark UI with real-time visualization.
 
@@ -23,7 +23,7 @@ The lowest active note uses 12-tone equal temperament (12TET), while all notes a
 - LFO for pitch modulation
 
 ### Tuning Systems
-- **Equal Perfect** (default): 12TET bass + Just intonation above
+- **Equal Justice** (default): 12TET bass + Just intonation above
 - **Just Major**, **Pythagorean**, **1/4 Comma Meantone**, **19-TET**
 - **Custom** ratios
 

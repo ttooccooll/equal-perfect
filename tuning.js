@@ -1,5 +1,5 @@
 /**
- * Tuning System for Equal Perfect Synthesizer
+ * Tuning System for Equal Justice Synthesizer
  * 
  * The lowest active note always uses 12-tone equal temperament (12TET).
  * All notes above it tune to perfect harmonic ratios from the overtone series.
@@ -22,8 +22,8 @@ const HARMONIC_RATIOS = {
 };
 
 const TUNING_SYSTEMS = {
-    'equal-perfect': {
-        name: 'Equal Perfect',
+    'equal-justice': {
+        name: 'Equal Justice',
         description: '12TET bass + Just intonation above',
         ratios: HARMONIC_RATIOS
     },
@@ -54,7 +54,7 @@ export class TuningSystem {
         this.activeNotes = new Map();
         this.lowestNote = null;
         this.listeners = [];
-        this.currentSystem = 'equal-perfect';
+        this.currentSystem = 'equal-justice';
         this.customRatios = null;
     }
 
@@ -70,7 +70,7 @@ export class TuningSystem {
         const ratios = this.customRatios || TUNING_SYSTEMS[this.currentSystem]?.ratios || HARMONIC_RATIOS;
         const baseRatio = ratios[intervalInOctave] || 1;
         
-        // Only use 12TET for pure equal temperament systems (not equal-perfect)
+        // Only use 12TET for pure equal temperament systems (not equal-justice)
         if (this.currentSystem === 'equal-19') {
             return Math.pow(2, semitones / 19);
         }

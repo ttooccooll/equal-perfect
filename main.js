@@ -1,5 +1,5 @@
 /**
- * Main application for Equal Perfect Synthesizer
+ * Main application for Equal Justice Synthesizer
  */
 
 import { TuningSystem } from './tuning.js';
@@ -47,7 +47,7 @@ class EqualPerfectSynth {
         this.setupMidiInput();
         this.setupVisualization();
         
-        console.log('Equal Perfect Synthesizer ready!');
+        console.log('Equal Justice Synthesizer ready!');
     }
 
     setupVisualization() {
@@ -407,7 +407,7 @@ class EqualPerfectSynth {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'equal-perfect-preset.json';
+            a.download = 'equal-justice-preset.json';
             a.click();
             URL.revokeObjectURL(url);
         });

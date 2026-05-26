@@ -1,5 +1,5 @@
 /**
- * Audio Engine for Equal Perfect Synthesizer
+ * Audio Engine for Equal Justice Synthesizer
  * Handles Web Audio API oscillators with smooth gliding between frequencies
  */
 
@@ -367,7 +367,7 @@ export class AudioEngine {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'equal-perfect-recording.webm';
+        a.download = 'equal-justice-recording.webm';
         a.click();
         URL.revokeObjectURL(url);
         this.recordedChunks = [];
